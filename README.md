@@ -47,5 +47,4 @@ Les données ont été téléchargées le 04/05/2020, la base de donnée à ce j
 
 ------------
 ### Partie 1: EDA
-Notebook [part_1_EDA.ipynb](leoguillaume/dila.gouv-CAPP)
-
+Notebook [part_1_EDA.ipynb](https://github.com/leoguillaume/vivadata_project/blob/master/part_1_EDA.ipynb)
