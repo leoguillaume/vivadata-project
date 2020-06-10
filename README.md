@@ -43,9 +43,9 @@ Ces données sont stockées dans une table 'Data' d'une base de donnée SQL qu'i
 ------------
 ### Nettoyage des données
 
-Les données ont été téléchargées le 04/05/2020, la base de donnée à ce jour contient 67210 décisions. Le nettoyage des données
-se trouve dans le notebook pre_cleaning et consiste à remplacer les valeurs 'null' en NaN, transformer les dates en format datetime. Afin de faciliter le traitement de la base de donnée, les modifications de celles-ci sont stockers dans un DataFrame Pandas contenu dans un fichier pickle.
+Les données ont été téléchargées le 04/05/2020, la base de donnée à ce jour contient 67210 décisions. Le nettoyage des données se trouve dans le notebook pre_cleaning et consiste à remplacer les valeurs 'null' en NaN, transformer les dates en format datetime. Afin de faciliter le traitement de la base de donnée, les modifications de celles-ci sont stockers dans un DataFrame Pandas contenu dans un fichier pickle.
+
 ------------
 ### Partie 1: EDA
-Notebook : [part_1_EDA.ipynb]()
+Notebook [part_1_EDA.ipynb](leoguillaume/dila.gouv-CAPP)
 
