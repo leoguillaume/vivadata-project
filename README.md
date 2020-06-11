@@ -15,32 +15,6 @@ Les données sont téléchargeables [ici](https://echanges.dila.gouv.fr/OPENDATA
 
 Le projet est de mettre en place une application permettant pour une requête données de fournir les décisions les plus pertinentes.
 
-__To Do list__ 
-- [x] Github
-- [x] Récuperer les données
-- [x] Data cleaning
-- [x] EDA
-    - [ ] Topic modeling
-- [ ] Text similarity
-    - [ ] Find a measure of similarity
-    - [ ] Find a measure of performance
-    - [ ] Tf-IDF 
-        - [ ] 1-gram
-        - [ ] n-gram
-        - [ ] Topic modeling cluster
-    - [ ] Word embedding
-       - [ ] Spacy
-       - [ ] Word2vec
-       - [ ] Doc2vec
-       - [ ] (Google Cloud instance ?)
-- [ ] Deployement 
-    - Save model
-    - Develop app
-    - Test unitaires
-    - Online publishing
-- [ ] Bonus :
-    - [ ] Mise à jour automatique (mensuellement) des données
-    - [ ] Selection par l'utilisation de la date, la nature, ou la possibilité de cherche un décision spécifique
 -------
 ### Récuparation des données
 
