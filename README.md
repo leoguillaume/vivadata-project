@@ -69,11 +69,45 @@ Si la base contient des décisions des premières instants, elle reste largement
 
 ![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/nature_of_decisions.png)
 
+Une première analyse des labels met en avant que les concepts juridiques étant généralement composé de plusieurs mots, comme 'entreprise en difficulté' ou 'contrat de travail', il peut être pertinent d'utiliser des bi ou trigrammes plutôt que des unigrammes.
+
 ![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/wordcloud_label_1.png)
+
+En utilisant des bigrammes par exemple nous pouvons avoir un premier aperçu des principales thématiques juridiques dans la base de données.
 
 ![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/bigram_labels_distribution.png)
 
+A partir de ces labels nous pouvons estimer que les thèmes principaux de la base sont le droit du travail et en particulier la rupture du contrat de travail, ainsi que les procédures collectives et enfin la procédure civile.
+
+L'analyse des tokens des textes des décisions met en avant que les mots les plus présents sont généralement inhérente à la rédaction d'une décision de justice et n'apportent donc pas réellement d'information sur son contenu.
+
 ![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/wordcloud_text.png)
+
+En accord avec l'analyse des labels (le premier thème apparait dans 15% des labels), je décide d'enregistrer les mots présents dans plus de 20 % des décisions dans une liste qui me permettra de le retirer des tokens lors du pré-traitement.
 
 ### III- Pré-traitement
 *Notebook: [PREPROCESSING](https://github.com/leoguillaume/vivadata_project/blob/master/notebooks/PREPROCESSING.ipynb)*
+
+L'étape de pré-traitement consiste à appliquer la fonction suivante sur les textes :
+`def preprocessing(text):
+    tokens = re.sub('\W', ' ', text)
+    doc = nlp(text)
+    tokens = [unidecode.unidecode(str(token).strip().lower()) for token in doc if len(token) > 2 and str(token).strip() != '']
+    tokens = [token for token in tokens if not nlp.vocab[token].is_stop and token not in common_words]
+    tokens = [tokens[i] for i in range(len(tokens)) if tokens[i].isalpha() or tokens[i - 1] == 'article']
+    return tokens`
+
+Cette fonction applique les opérations suivantes :
+
+1. Retire la ponctuation
+2. Tokenise les mots
+3. Retire les espaces inutiles
+4. Retire les tokens dont la longueur est inférieure à 2 caractères
+5. Retire les accents
+6. Passe en minuscule
+7. Retire les mots qui font partie des mots les plus fréquents du corpus
+8. Retire les stop words
+9. Retire les nombres sauf si le token précédent est 'article'
+
+### IV- Le modèle : Doc2Vec
+*Notebook: [DOC2VEC](https://github.com/leoguillaume/vivadata_project/blob/master/notebooks/DOC2VEC.ipynb)*
