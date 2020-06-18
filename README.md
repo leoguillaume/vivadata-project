@@ -1,5 +1,5 @@
 # vivadata_project
-Projet final pour le batch10 du bootcamp VIVADATA. 
+Projet final pour le batch10 du bootcamp VIVADATA.
 
 ## VIVADATA PROJECT
 
@@ -20,17 +20,17 @@ Le projet est de mettre en place une application permettant pour une requête do
 
 #### `CAPP_retrivial.py`
 
-La base de donnée est composée de fichiers gunzip contenant chacun une arboresence de dossiers où se trouve des les décisions de justice sous format XML. Ce script permet de python CAPP comprend deux fonctions permettant à partir des fichiers gunzip téléchargés de récupérer l'ensemble des fichiers XML distincts et de les stockers dans un dossier unique facilitant leur utilisation. 
+La base de donnée est composée de fichiers gunzip contenant chacun une arboresence de dossiers où se trouve des les décisions de justice sous format XML. Ce script permet de python CAPP comprend deux fonctions permettant à partir des fichiers gunzip téléchargés de récupérer l'ensemble des fichiers XML distincts et de les stockers dans un dossier unique facilitant leur utilisation.
 
 `CAPP_retrievial(path_in: str, path_out: str)`<br>
-Permet de récupérer les décisions des fichiers gunzip périodiques. Alexis Eidelman fournis sur son Gitub un script python pour télécharger de manière automatique tous ces fichiers et les décompresser ([TarDilaData](https://github.com/AlexisEidelman/TarDilaData)). 
+Permet de récupérer les décisions des fichiers gunzip périodiques. Alexis Eidelman fournis sur son Gitub un script python pour télécharger de manière automatique tous ces fichiers et les décompresser ([TarDilaData](https://github.com/AlexisEidelman/TarDilaData)).
 
 `CAPP_freemium_retrievial(path_in: str, path_out: str)`<br>
 Permet de récupérer les décisions du fichier Freemium_capp_global_20180315-170000.tar.gz. Ce fichier est bien plus lourd puisqu'il contient les décisions postérieures à mars 2018. Il doit être télécharger et décompresser à la main.
 
 #### `xml_to_sql.py`
 
-Ce script contient une fonction `data(path_in: str, path_out: str)` permettant de scrapper les données suivantes des décisions : 
+Ce script contient une fonction `data(path_in: str, path_out: str)` permettant de scrapper les données suivantes des décisions :
 * l'identifiant de la décision `ID`
 * le numéro `NUMERO_AFFAIRE`
 * la date `DATE_DEC`
@@ -39,7 +39,7 @@ Ce script contient une fonction `data(path_in: str, path_out: str)` permettant d
 * les labels `SCT`
 * la décision `CONTENU`
 
-Ces données sont stockées dans une table 'Data' d'une base de donnée SQL qu'il faut définir. 
+Ces données sont stockées dans une table 'Data' d'une base de donnée SQL qu'il faut définir.
 
 ------------
 ### Nettoyage des données
@@ -47,5 +47,15 @@ Ces données sont stockées dans une table 'Data' d'une base de donnée SQL qu'i
 Les données ont été téléchargées le 04/05/2020, la base de donnée à ce jour contient 67210 décisions. Le nettoyage des données se trouve dans le notebook pre_cleaning et consiste à remplacer les valeurs 'null' en NaN, transformer les dates en format datetime. Afin de faciliter le traitement de la base de donnée, les modifications de celles-ci sont stockers dans un DataFrame Pandas contenu dans un fichier pickle.
 
 ------------
-### Partie 1: EDA
-Notebook [part_1_EDA.ipynb](https://github.com/leoguillaume/vivadata_project/blob/master/part_1_EDA.ipynb)
+### I- Nettoyage des données
+Notebook* [CLEANING](https://github.com/leoguillaume/vivadata_project/blob/master/notebooks/CLEANING.ipynb)
+
+J'ai dans un premier temps formaté les valeurs nulles ainsi que les dates.
+
+### II- Analyse exploratoire des données
+Notebook* [EDA](https://github.com/leoguillaume/vivadata_project/blob/master/notebooks/EDA.ipynb)
+
+![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/null_values.png)
+
+### III- Pré-traitement
+Notebook* [PREPROCESSING](https://github.com/leoguillaume/vivadata_project/blob/master/notebooks/PREPROCESSING.ipynb)
