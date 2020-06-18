@@ -13,14 +13,14 @@ Les données sont téléchargeables [ici](https://echanges.dila.gouv.fr/OPENDATA
 
 ### Le projet
 
-Le projet est de mettre en place une application permettant pour une requête données de fournir les décisions les plus pertinentes.
+Le projet est de mettre en place une application permettant pour une requête données de fournir les décisions les plus pertinentes. Cette application reposera sur l'entrainement d'un modèle Doc2Vec et d'une mesure de similarité entre les vecteurs générés par le modèle.
 
 -------
 ### Récuparation des données
 
 #### `CAPP_retrivial.py`
 
-La base de donnée est composée de fichiers gunzip contenant chacun une arboresence de dossiers où se trouve des les décisions de justice sous format XML. Ce script permet de python CAPP comprend deux fonctions permettant à partir des fichiers gunzip téléchargés de récupérer l'ensemble des fichiers XML distincts et de les stockers dans un dossier unique facilitant leur utilisation.
+La base de donnée est composée de fichiers gunzip contenant chacun une arborescence de dossiers où se trouve des les décisions de justice sous format XML. Ce script permet de python CAPP comprend deux fonctions permettant à partir des fichiers gunzip téléchargés de récupérer l'ensemble des fichiers XML distincts et de les stockers dans un dossier unique facilitant leur utilisation.
 
 `CAPP_retrievial(path_in: str, path_out: str)`<br>
 Permet de récupérer les décisions des fichiers gunzip périodiques. Alexis Eidelman fournis sur son Gitub un script python pour télécharger de manière automatique tous ces fichiers et les décompresser ([TarDilaData](https://github.com/AlexisEidelman/TarDilaData)).
@@ -42,20 +42,30 @@ Ce script contient une fonction `data(path_in: str, path_out: str)` permettant d
 Ces données sont stockées dans une table 'Data' d'une base de donnée SQL qu'il faut définir.
 
 ------------
-### Nettoyage des données
-
-Les données ont été téléchargées le 04/05/2020, la base de donnée à ce jour contient 67210 décisions. Le nettoyage des données se trouve dans le notebook pre_cleaning et consiste à remplacer les valeurs 'null' en NaN, transformer les dates en format datetime. Afin de faciliter le traitement de la base de donnée, les modifications de celles-ci sont stockers dans un DataFrame Pandas contenu dans un fichier pickle.
-
-------------
 ### I- Nettoyage des données
-*Notebook:[CLEANING](https://github.com/leoguillaume/vivadata_project/blob/master/notebooks/CLEANING.ipynb)*
 
-J'ai dans un premier temps formaté les valeurs nulles ainsi que les dates.
+*Notebook: [CLEANING](https://github.com/leoguillaume/vivadata_project/blob/master/notebooks/CLEANING.ipynb)*
+
+Les données ont été téléchargées le 04/05/2020, la base de donnée à ce jour contient 67210 décisions. Le nettoyage des données à consisté à trouver et formater les valeurs nulles ainsi que les dates. Afin de faciliter le traitement de la base de donnée, les modifications de celles-ci sont stockées dans un DataFrame Pandas contenu dans un fichier pickle.
+
+![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/null_values.png)
+
+On remarque que seulement 26,44 % ont un label.
+![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/df_null_values.png)
 
 ### II- Analyse exploratoire des données
 *Notebook: [EDA](https://github.com/leoguillaume/vivadata_project/blob/master/notebooks/EDA.ipynb)*
 
-![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/null_values.png)
+Les décisions ne sont pas réparties de manière homogènes dans le temps, une majorité se concentre autour de 2007 et de 2008.
+![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/spatial_distribution.png)
+
+![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/nature_of_decisions.png)
+
+
+![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/bigram_labels_distribution.png)
+![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/time_distribution.png)
+![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/wordcloud_label_1.png)
+![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/wordcloud_text.png)
 
 ### III- Pré-traitement
 *Notebook: [PREPROCESSING](https://github.com/leoguillaume/vivadata_project/blob/master/notebooks/PREPROCESSING.ipynb)*
