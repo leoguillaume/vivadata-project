@@ -51,20 +51,28 @@ Les données ont été téléchargées le 04/05/2020, la base de donnée à ce j
 ![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/null_values.png)
 
 On remarque que seulement 26,44 % ont un label.
+
 ![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/df_null_values.png)
 
 ### II- Analyse exploratoire des données
 *Notebook: [EDA](https://github.com/leoguillaume/vivadata_project/blob/master/notebooks/EDA.ipynb)*
 
-Les décisions ne sont pas réparties de manière homogènes dans le temps, une majorité se concentre autour de 2007 et de 2008.
+Les décisions ne sont pas réparties de manière homogènes dans le temps, une majorité ont été rendu entre 2006 et de 2008.
+
+![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/time_distribution.png)
+
+La répartition spatiale des décisions semble être liée logiquement à la taille de la population du ressort.
+
 ![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/spatial_distribution.png)
+
+Si la base contient des décisions des premières instants, elle reste largement composée de décisions d'appel.
 
 ![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/nature_of_decisions.png)
 
+![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/wordcloud_label_1.png)
 
 ![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/bigram_labels_distribution.png)
-![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/time_distribution.png)
-![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/wordcloud_label_1.png)
+
 ![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/wordcloud_text.png)
 
 ### III- Pré-traitement
