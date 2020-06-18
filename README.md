@@ -48,14 +48,14 @@ Les données ont été téléchargées le 04/05/2020, la base de donnée à ce j
 
 ------------
 ### I- Nettoyage des données
-Notebook* [CLEANING](https://github.com/leoguillaume/vivadata_project/blob/master/notebooks/CLEANING.ipynb)
+*Notebook:[CLEANING](https://github.com/leoguillaume/vivadata_project/blob/master/notebooks/CLEANING.ipynb)*
 
 J'ai dans un premier temps formaté les valeurs nulles ainsi que les dates.
 
 ### II- Analyse exploratoire des données
-Notebook* [EDA](https://github.com/leoguillaume/vivadata_project/blob/master/notebooks/EDA.ipynb)
+*Notebook: [EDA](https://github.com/leoguillaume/vivadata_project/blob/master/notebooks/EDA.ipynb)*
 
 ![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/null_values.png)
 
 ### III- Pré-traitement
-Notebook* [PREPROCESSING](https://github.com/leoguillaume/vivadata_project/blob/master/notebooks/PREPROCESSING.ipynb)
+*Notebook: [PREPROCESSING](https://github.com/leoguillaume/vivadata_project/blob/master/notebooks/PREPROCESSING.ipynb)*
