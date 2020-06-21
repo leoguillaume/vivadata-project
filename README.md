@@ -88,16 +88,7 @@ En accord avec l'analyse des labels (le premier thème apparait dans 15% des lab
 ### III- Pré-traitement
 *Notebook: [PREPROCESSING](https://github.com/leoguillaume/vivadata_project/blob/master/notebooks/PREPROCESSING.ipynb)*
 
-L'étape de pré-traitement consiste à appliquer la fonction suivante sur les textes :
-`def preprocessing(text):
-    tokens = re.sub('\W', ' ', text)
-    doc = nlp(text)
-    tokens = [unidecode.unidecode(str(token).strip().lower()) for token in doc if len(token) > 2 and str(token).strip() != '']
-    tokens = [token for token in tokens if not nlp.vocab[token].is_stop and token not in common_words]
-    tokens = [tokens[i] for i in range(len(tokens)) if tokens[i].isalpha() or tokens[i - 1] == 'article']
-    return tokens`
-
-Cette fonction applique les opérations suivantes :
+L'étape de pré-traitement consiste à appliquer la fonction `preprocessing(text)` sur les textes qui applique les opérations suivantes :
 
 1. Retire la ponctuation
 2. Tokenise les mots
