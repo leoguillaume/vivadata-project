@@ -1,5 +1,6 @@
 # vivadata_project
 Projet final pour le batch10 du bootcamp VIVADATA.
+26/05/20
 
 ## VIVADATA PROJECT
 
@@ -13,9 +14,15 @@ Les données sont téléchargeables [ici](https://echanges.dila.gouv.fr/OPENDATA
 
 ### Le projet
 
-Le projet de classer les décisions de justice à l'aide des labels indiqués sous certaines décisions.
+Le projet de classer les décisions de justice à l'aide des labels indiqués sous certaines décisions. La base contient plus de 65000 décisions de justice dont seulement 26 % sont labellisées.  
 
 ![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/schema_projet.png)
+
+### Difficultés
+
+1. Les concepts juridiques qui servent de labels sont très nombreux et les labels existants ne sont pas un gage d'exhaustivité.
+2. L'information pertinente permettant de trouver le label est noyée dans le texte.
+3. La manière de rédigée une décision de justice n'est pas homogène.
 
 -------
 ### Récuparation des données
@@ -81,7 +88,7 @@ Une première analyse des labels permet d'avoir un premier aperçu des principal
 ![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/wordcloud_label_1.png)
 
 Les labels sont composés comme suit:
-`'CONTRAT DE TRAVAIL, EXECUTION - Salaire - Paiement - Redressement et liquidation judiciaires\n\n'``
+`'CONTRAT DE TRAVAIL, EXECUTION - Salaire - Paiement - Redressement et liquidation judiciaires\n\n`
 Par soucis de simplification je conserve uniquement le premier label. On se retrouve avec 514 labels. Il s'avère nécessaire de réduire ce nombre, pour cela je conserve uniquement les labels présents dans plus de 2 décisions et je regroupe certains labels. J'obtiens alors 253 labels uniques.
 
 ![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/distribution_labels.png)
@@ -106,17 +113,41 @@ L'étape de pré-traitement consiste à appliquer la fonction `preprocessing(tex
 La préparation des données a consisté à encoder les tokens et les labels et ajouter un token `[<START>]` au début des textes.
 
 ### V- Graph de similarité et génération des données d'entrainement
-*Notebook: [DOC2VEC](https://github.com/leoguillaume/vivadata_project/blob/master/jupyter_notebooks/DOC2VEC.ipynb)*
+*Notebook: [SYNTHESIZED_GRAPH](https://github.com/leoguillaume/vivadata_project/blob/master/jupyter_notebooks/SYNTHESIZED_GRAPH.ipynb)*
 
 Le graph de similarity ou graph synthétique est construit à partir des embeddings résultants d'un model Doc2Vec entrainé sur l'ensemble de la base pendant 10 époques.
 A l'issue de cet entrainement j'ai pu analyser la similarité entre des décisions du même label.
 
 ![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/distribution_cosine_similarity.png)
 
-J'ai opté pour un graph tenant compte de similarité de plus 0.6.
+J'ai opté pour un graph tenant compte de similarité de plus 0.6 car c'est la valeur moyenne pour les décisions ayant un label partagé avec moins de 7 décisions, ce qui représente une grande partie des décisions (voir la distribution de la fréquence des labels).
 
 ![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/synthetized_graph.png)
 
 A partir de ce graph et des textes sont générés les données d'entrainement. Je tiens compte uniquement des 2 plus proches voisins.
 
-![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/feat-prop-clean.png)
+![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/feat-prop-clean.gif)
+
+### VI- Model: LSTM et graph régularisation
+*Notebook: [MODEL](https://github.com/leoguillaume/vivadata_project/blob/master/jupyter_notebooks/MODEL.ipynb)*
+
+Le model de classification est de base est un model de LSTM (Long Short-Term Memory Cell) bidirectionnel. Je réalise un pad de textes en tronquant à 2000 tokens car cela concerne une grande majorité des décisions et permet d'alléger le modèle.
+
+![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/model_summary.png)
+
+A ce model j'ajoute une régularisation par graph avec `nsl.keras.GraphRegularization`. Le modèle est entrainé sur Google Collab pour profiter d'un GPU.
+
+![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/results.png)
+![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/results_accuracy.png)
+
+Avec une accuracy de 0.04 sur le jeu de test les résultats s'avère plus que décevant. Toutefois compte tenu de la configuration des données cela était prévisible. Un certain nombre d'axe d'amélioration peuvent être alors envisagés.
+
+### Pistes d'amélioration
+
+1. L'information pertinente même après traitement reste noyées dans les faits. Il conviendrait de repenser le pré-traitement des données pour extraire uniquement les points de droits des texts.
+
+2. Les labels restent trop nombreux et leur fréquence est trop hétérogène. Nous pourrions chercher à entrainer le model sur une autre base de données fournies par la DILA (comme les décisions de cassation par exemple) qui seraient mieux labellisées. Pour l'hétérogénéité faire de la data réduction pourrait être pertinent, tout comme utiliser un stemmer pour rassembler d'avantage de labels entre eux.
+
+3. L'embedding des textes pour la construction du graph repose sur une modèle qui peine à extraire la substance du texte qui nous intéresse. Il pourrait être judicieux d'utiliser un modèle de transformer, pré-entrainé sur la grammaire française comme camemBERT.
+
+4. Réaliser un fine tuning des hyperparamètres du modèle.
