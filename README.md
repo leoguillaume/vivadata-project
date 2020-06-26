@@ -69,6 +69,11 @@ Si la base contient des décisions des premières instants, elle reste largement
 
 ![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/nature_of_decisions.png)
 
+
+### III- Pré-traitement
+*Notebook: [PREPROCESSING](https://github.com/leoguillaume/vivadata_project/blob/master/notebooks/PREPROCESSING.ipynb)*
+
+
 Une première analyse des labels met en avant que les concepts juridiques étant généralement composé de plusieurs mots, comme 'entreprise en difficulté' ou 'contrat de travail', il peut être pertinent d'utiliser des bi ou trigrammes plutôt que des unigrammes.
 
 ![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/wordcloud_label_1.png)
@@ -85,8 +90,7 @@ L'analyse des tokens des textes des décisions met en avant que les mots les plu
 
 En accord avec l'analyse des labels (le premier thème apparait dans 15% des labels), je décide d'enregistrer les mots présents dans plus de 20 % des décisions dans une liste qui me permettra de le retirer des tokens lors du pré-traitement.
 
-### III- Pré-traitement
-*Notebook: [PREPROCESSING](https://github.com/leoguillaume/vivadata_project/blob/master/notebooks/PREPROCESSING.ipynb)*
+
 
 L'étape de pré-traitement consiste à appliquer la fonction `preprocessing(text)` sur les textes qui applique les opérations suivantes :
 
@@ -102,3 +106,5 @@ L'étape de pré-traitement consiste à appliquer la fonction `preprocessing(tex
 
 ### IV- Le modèle : Doc2Vec
 *Notebook: [DOC2VEC](https://github.com/leoguillaume/vivadata_project/blob/master/notebooks/DOC2VEC.ipynb)*
+
+La base contient 64950899 mots, dont 28343648 si sans les répétitions. Ce qui donne une moyenne de 966,4 mots par décision. Il s'avère nécessaire de réduire ce nombre.
