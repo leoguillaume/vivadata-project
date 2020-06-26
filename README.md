@@ -18,8 +18,6 @@ Le projet de classer les décisions de justice à l'aide des labels indiqués so
 
 ![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/schema_projet.png)
 
-Je cherche ici à faire une application du tutoriel Tensorflow [Graph regularization for sentiment classification using synthesized graphs](https://www.tensorflow.org/neural_structured_learning/tutorials/graph_keras_lstm_imdb).
-
 ### Difficultés
 
 1. Les concepts juridiques qui servent de labels sont très nombreux et les labels existants ne sont pas un gage d'exhaustivité.
