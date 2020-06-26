@@ -18,6 +18,7 @@ Le projet de classer les décisions de justice à l'aide des labels indiqués so
 
 ![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/schema_projet.png)
 
+Je cherche ici à faire une application du tutoriel Tensorflow [Graph regularization for sentiment classification using synthesized graphs](https://www.tensorflow.org/neural_structured_learning/tutorials/graph_keras_lstm_imdb).
 ### Difficultés
 
 1. Les concepts juridiques qui servent de labels sont très nombreux et les labels existants ne sont pas un gage d'exhaustivité.
@@ -112,33 +113,33 @@ L'étape de pré-traitement consiste à appliquer la fonction `preprocessing(tex
 
 La préparation des données a consisté à encoder les tokens et les labels et ajouter un token `[<START>]` au début des textes.
 
-### V- Graph de similarité et génération des données d'entrainement
+### V- Graphe de similarité et génération des données d'entrainement
 *Notebook: [SYNTHESIZED_GRAPH](https://github.com/leoguillaume/vivadata_project/blob/master/jupyter_notebooks/SYNTHESIZED_GRAPH.ipynb)*
 
-Le graph de similarity ou graph synthétique est construit à partir des embeddings résultants d'un model Doc2Vec entrainé sur l'ensemble de la base pendant 10 époques.
+Le graphe de similarity ou graphe synthétique est construit à partir des embeddings résultants d'un model Doc2Vec entrainé sur l'ensemble de la base pendant 10 époques.
 A l'issue de cet entrainement j'ai pu analyser la similarité entre des décisions du même label.
 
 ![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/distribution_cosine_similarity.png)
 
-J'ai opté pour un graph tenant compte de similarité de plus 0.6 car c'est la valeur moyenne pour les décisions ayant un label partagé avec moins de 7 décisions, ce qui représente une grande partie des décisions (voir la distribution de la fréquence des labels).
+J'ai opté pour un graphe tenant compte de similarité de plus 0.6 car c'est la valeur moyenne pour les décisions ayant un label partagé avec moins de 7 décisions, ce qui représente une grande partie des décisions (voir la distribution de la fréquence des labels).
 
 ![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/synthetized_graph.png)
 
-A partir de ce graph et des textes sont générés les données d'entrainement. Je tiens compte uniquement des 2 plus proches voisins.
+A partir de ce graphe et des textes sont générés les données d'entrainement. Je tiens compte uniquement des 2 plus proches voisins.
 
 ![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/feat-prop-clean.gif)
 
-### VI- Model: LSTM et graph régularisation
+### VI- Model: LSTM et graph regularization
 *Notebook: [MODEL](https://github.com/leoguillaume/vivadata_project/blob/master/jupyter_notebooks/MODEL.ipynb)*
 
 Le model de classification est de base est un model de LSTM (Long Short-Term Memory Cell) bidirectionnel. Je réalise un pad de textes en tronquant à 2000 tokens car cela concerne une grande majorité des décisions et permet d'alléger le modèle.
 
 ![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/model_summary.png)
 
-A ce model j'ajoute une régularisation par graph avec `nsl.keras.GraphRegularization`. Le modèle est entrainé sur Google Collab pour profiter d'un GPU.
+A ce model j'ajoute une régularisation par graphe avec `nsl.keras.GraphRegularization`. Le modèle est entrainé sur Google Collab pour profiter d'un GPU.
 
-![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/results.png)
-![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/results_accuracy.png)
+![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/result.png)
+![alt text](https://github.com/leoguillaume/vivadata_project/blob/master/data_visualisations/result_accuracy.png)
 
 Avec une accuracy de 0.04 sur le jeu de test les résultats s'avère plus que décevant. Toutefois compte tenu de la configuration des données cela était prévisible. Un certain nombre d'axe d'amélioration peuvent être alors envisagés.
 
@@ -148,6 +149,6 @@ Avec une accuracy de 0.04 sur le jeu de test les résultats s'avère plus que d�
 
 2. Les labels restent trop nombreux et leur fréquence est trop hétérogène. Nous pourrions chercher à entrainer le model sur une autre base de données fournies par la DILA (comme les décisions de cassation par exemple) qui seraient mieux labellisées. Pour l'hétérogénéité faire de la data réduction pourrait être pertinent, tout comme utiliser un stemmer pour rassembler d'avantage de labels entre eux.
 
-3. L'embedding des textes pour la construction du graph repose sur une modèle qui peine à extraire la substance du texte qui nous intéresse. Il pourrait être judicieux d'utiliser un modèle de transformer, pré-entrainé sur la grammaire française comme camemBERT.
+3. L'embedding des textes pour la construction du graphe repose sur une modèle qui peine à extraire la substance du texte qui nous intéresse. Il pourrait être judicieux d'utiliser un modèle plus performant comme un transformer, pré-entrainé sur la grammaire française tel que [camemBERT](https://huggingface.co/transformers/model_doc/camembert.html).
 
 4. Réaliser un fine tuning des hyperparamètres du modèle.
